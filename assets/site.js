@@ -38,6 +38,12 @@
   } else els.forEach(function(el){el.classList.add('in');});
 
   // count-up numbers
+  // years since founding: always current, e.g. data-since="1983"
+  document.querySelectorAll('[data-since]').forEach(function(el){
+    var yrs=new Date().getFullYear()-(+el.dataset.since), suf=el.dataset.suffix||'';
+    el.dataset.count=yrs;
+    el.textContent=(document.body.classList.contains('lang-ar')?yrs.toLocaleString('ar-SA'):String(yrs))+suf;
+  });
   var nums=document.querySelectorAll('[data-count]');
   if('IntersectionObserver' in window&&!reduce){
     var co=new IntersectionObserver(function(es){es.forEach(function(e){
