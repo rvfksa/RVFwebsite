@@ -115,21 +115,17 @@ main{flex:1;width:100%}
 .section-head .lead{margin:0;max-width:44ch}
 
 /* hero: rounded media card */
-.hero{padding:88px var(--gutter) 0}
-.hero-card{position:relative;max-width:1360px;margin-inline:auto;min-height:min(88vh,820px);border-radius:var(--radius);overflow:hidden;color:var(--on-dark);display:flex;align-items:flex-end;isolation:isolate}
+.hero{padding:0}
+.hero-card{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;color:var(--on-dark);display:flex;align-items:flex-end;isolation:isolate}
 .hero-card>video,.hero-card>img.bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transform:scale(1.08);animation:heroZoom 2.2s var(--ease) forwards}
 .hero-card::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgb(0 0 0 / .25) 0%,rgb(0 0 0 / .05) 35%,rgb(0 0 0 / .7) 100%)}
 @keyframes heroZoom{to{transform:scale(1)}}
-.hero-inner{width:100%;display:grid;grid-template-columns:1.4fr 1fr;align-items:end;gap:2rem;padding:clamp(24px,5vw,64px)}
+.hero-inner{width:100%;max-width:calc(var(--wrap) + 2 * var(--gutter));margin-inline:auto;display:grid;grid-template-columns:1.4fr 1fr;align-items:end;gap:2rem;padding:120px var(--gutter) clamp(40px,7vh,80px)}
 .hero h1{margin:0;max-width:13ch}
 .hero-logo{width:min(280px,55vw);margin-bottom:1.4rem}
 .hero-side{display:flex;flex-direction:column;align-items:flex-start;gap:1.2rem;justify-self:end;max-width:340px}
 .hero-side p{margin:0;color:rgb(255 255 255 / .82)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:.7rem}
-.scroll-cue{position:absolute;top:clamp(24px,5vw,48px);inset-inline-end:clamp(24px,5vw,48px);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem;opacity:.85}
-.scroll-cue i{width:1px;height:40px;background:rgb(255 255 255 / .4);position:relative;overflow:hidden}
-.scroll-cue i::after{content:"";position:absolute;inset:0;background:#fff;animation:cue 2s infinite var(--ease)}
-@keyframes cue{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
 
 /* page hero (inner pages) */
 .page-hero{padding:128px 0 0}
@@ -207,7 +203,7 @@ button.card{border:0;font:inherit;text-align:start;cursor:pointer;width:100%}
 .icon-row img{width:44px;height:44px;object-fit:contain;padding:8px;border-radius:12px;background:var(--surface)}
 
 /* ---------- experience banner ---------- */
-.banner{position:relative;border-radius:var(--radius);overflow:hidden;color:var(--on-dark);min-height:min(70vh,560px);display:grid;place-items:center;text-align:center;isolation:isolate;padding:clamp(28px,6vw,72px)}
+.banner{position:relative;margin-inline:calc(50% - 50vw);overflow:hidden;color:var(--on-dark);min-height:min(80vh,680px);display:grid;place-items:center;text-align:center;isolation:isolate;padding:clamp(28px,6vw,72px)}
 .banner>video,.banner>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
 .banner::after{content:"";position:absolute;inset:0;z-index:-1;background:color-mix(in oklab,var(--primary) 62%,transparent)}
 .banner h2{font-size:clamp(2.2rem,5.5vw,4.4rem);margin-bottom:.3em}
@@ -262,8 +258,8 @@ dialog.overlay::backdrop{background:rgb(10 8 6 / .88);backdrop-filter:blur(6px)}
 .g-nav button:not(:disabled):hover{background:#fff;color:var(--ink)}
 
 /* ---------- footer ---------- */
-.site-footer{padding:16px var(--gutter) 16px}
-.foot{max-width:1360px;margin-inline:auto;background:var(--ink);color:var(--on-dark);border-radius:var(--radius);padding:clamp(32px,5vw,64px) clamp(24px,5vw,64px) 28px}
+.site-footer{padding:0}
+.foot{background:var(--ink);color:var(--on-dark);padding:clamp(48px,6vw,80px) max(var(--gutter),calc((100% - var(--wrap)) / 2 + var(--gutter))) 28px}
 .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2rem}
 .foot-logo{width:170px;margin-bottom:1.2rem}
 .foot p,.foot address{color:rgb(255 255 255 / .62);font-size:.92rem}
@@ -315,7 +311,6 @@ dialog.overlay::backdrop{background:rgb(10 8 6 / .88);backdrop-filter:blur(6px)}
   .product .go{display:none}
   .form .row{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr}
-  .hero-card{min-height:82vh}
   .philo{grid-template-columns:1fr}
   .philo .thumb{aspect-ratio:16/10}
   .stack-text{gap:1.2rem}
@@ -325,3 +320,5 @@ dialog.overlay::backdrop{background:rgb(10 8 6 / .88);backdrop-filter:blur(6px)}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .js .reveal{opacity:1;transform:none}
 }
+
+@media (max-width:1000px){
