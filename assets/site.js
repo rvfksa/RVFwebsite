@@ -8,13 +8,27 @@
   var btn=document.querySelector('.menu-btn'), nav=document.getElementById('nav');
   if(btn&&nav) btn.addEventListener('click',function(){var o=nav.classList.toggle('open');btn.setAttribute('aria-expanded',o);});
 
-  // header hides on scroll down, returns on scroll up
+  // header: solid after hero, hides on scroll down, returns on scroll up
   var header=document.querySelector('.site-header'), lastY=0;
-  window.addEventListener('scroll',function(){
+  function onScroll(){
     var sy=window.scrollY; if(!header) return;
-    header.classList.toggle('hide',sy>lastY&&sy>240&&!(nav&&nav.classList.contains('open')));
+    header.classList.toggle('scrolled',sy>40);
+    header.classList.toggle('hide',sy>lastY&&sy>500&&!(nav&&nav.classList.contains('open')));
     lastY=sy;
-  },{passive:true});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  // close mobile menu after choosing a section
+  if(nav) nav.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');if(btn)btn.setAttribute('aria-expanded',false);});});
+
+  // highlight the menu link of the section in view
+  var navLinks=document.querySelectorAll('nav ul a[href^="#"]');
+  if(navLinks.length&&'IntersectionObserver' in window){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      navLinks.forEach(function(l){l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id);});
+    });},{rootMargin:'-45% 0px -50% 0px'});
+    navLinks.forEach(function(l){var t=document.querySelector(l.getAttribute('href')); if(t) so.observe(t);});
+  }
 
   // reveal on scroll
   var els=document.querySelectorAll('.reveal');
@@ -34,27 +48,6 @@
       requestAnimationFrame(step);
     });},{threshold:.6});
     nums.forEach(function(n){co.observe(n);});
-  }
-
-  // stacking cards: earlier cards shrink + dim as the next one slides over
-  var stack=document.querySelectorAll('.stack-item');
-  if(stack.length&&!reduce){
-    var ticking=false;
-    function update(){
-      ticking=false;
-      stack.forEach(function(item,i){
-        var next=stack[i+1], s=1, o=1;
-        if(next){
-          var a=item.getBoundingClientRect(), b=next.getBoundingClientRect();
-          var p=Math.min(Math.max((a.bottom-b.top)/a.height,0),1);
-          s=1-p*0.06; o=1-p*0.35;
-        }
-        item.style.transform='scale('+s.toFixed(4)+')';
-        item.firstElementChild.style.filter=o<1?'brightness('+o.toFixed(3)+')':'';
-      });
-    }
-    window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
-    window.addEventListener('resize',update); update();
   }
 
   var CLOSE='<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
